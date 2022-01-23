@@ -1,3 +1,4 @@
+//큐2
 #include <iostream>
 #include <queue>
 #include <string>
