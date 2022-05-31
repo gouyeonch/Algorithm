@@ -16,7 +16,7 @@ int main()
         s.insert(num);
     }
 
-    for(auto i : s)
+    for(int i = 0; i < M; i++)
     {
         cin >> num;
         count += s.count(num);
