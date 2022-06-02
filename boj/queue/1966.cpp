@@ -1,52 +1,52 @@
 //프린터 큐
 #include <iostream>
 #include <queue>
-#include <functional>
+#include <vector>
 
 using namespace std;
 
-struct node{
-    int initind;
-    int priority;
+int main()
+{
+    int test, N, M, imp, count = 0;
+    priority_queue<int> ptyq;
+    queue< pair<int, int> > q;
 
-    node(int i, int p) : initind(i), priority(p) {}
+    cin >> test;
 
-    bool operator<(const node n) const{
-        return this->priority > n.priority;
-    }
-};
-
-int main(){
-
-    int N,M,test;
-    int p;
-
-    cin>>test;
-
-    //테스트 케이스 수에 따라 테스트 수행
-    for (int i = 0; i < test; i++)
+    for(int i = 0; i < test; i++)
     {
-        priority_queue<node, vector<node>, greater<node>> pq;
+        cin >> N >> M;
+        count = 0;
+        ptyq = priority_queue<int>();
+        q = queue< pair<int, int> >();
 
-        cin>>N;
-        cin>>M;
-
-        for(int j=0;j<N;j++){
-            cin>>p;
-
-            pq.push(node(j,p));
+        for(int j = 0; j < N; j++)
+        {
+            cin >> imp;
+            ptyq.emplace(imp);
+            q.emplace(imp, j);
         }
-        
-        for(int j=0;j<N;j++){
-            node ts = pq.top(); pq.pop();
-            if(ts.initind==M){
-                cout<<j+1<<endl;
-                break;
+
+        while(1)
+        {
+            if(q.front().first >= ptyq.top())
+            {
+                count++;
+                if(q.front().second == M)
+                {
+                    cout << count << endl;
+                    break;
+                }
+                q.pop();
+                ptyq.pop();
+            }
+            else
+            {
+                q.emplace(q.front());
+                q.pop();
             }
         }
-
     }
-    
 
     return 0;
 }
