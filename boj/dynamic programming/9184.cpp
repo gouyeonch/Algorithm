@@ -1,12 +1,6 @@
 #include <iostream>
+
 using namespace std;
-
-
-
-int w(int a, int b, int c)
-{
-
-}
 
 int main()
 {
