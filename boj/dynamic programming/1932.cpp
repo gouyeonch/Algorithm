@@ -23,8 +23,8 @@ int main()
         for(int j = 1; j < i; j++)
         {
             cin >> num;
-            
-            if(dp[i-1] > dp [j]) tempDp[j] = dp[j-1] + num;
+
+            if(dp[j-1] > dp [j]) tempDp[j] = dp[j-1] + num;
             else tempDp[j] += num;
         }
 
