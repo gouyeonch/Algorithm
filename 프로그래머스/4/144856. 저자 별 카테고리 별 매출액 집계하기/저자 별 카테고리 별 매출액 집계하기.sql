@@ -1,7 +1,10 @@
-select author.author_id, author.author_name, book.category, sum(book_sales.sales*book.price) as total_sales
-from book, author, book_sales
-where book.book_id=book_sales.book_id
-and book.author_id=author.author_id
-and sales_date like '2022-01%'
-group by  author.author_id, author.author_name, book.category
-order by author.author_id, category desc
+-- 집계함수 밖으로 나간 연산은 group by의 영향을 받지 않는다 (sum(s.SALES)*b.PRICE) 하면 안댐
+SELECT a.AUTHOR_ID,	a.AUTHOR_NAME,	b.CATEGORY,	sum(s.SALES*b.PRICE) as TOTAL_SALES
+    from BOOK b
+        join AUTHOR a
+        on b.AUTHOR_ID = a.AUTHOR_ID
+        join BOOK_SALES s
+        on b.BOOK_ID = s.BOOK_ID
+    where year(s.SALES_DATE) = '2022' and month(s.SALES_DATE) = '01'
+    group by 1,2,3
+    order by b.AUTHOR_ID, b.CATEGORY desc
