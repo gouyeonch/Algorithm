@@ -1,13 +1,14 @@
-with TBL as (select MEMBER_ID, count(MEMBER_ID) as cc
+# 1230
+with tbl as(select *, count(*) as CNT # 리뷰 제일 많이 작성한 리퓨 파싱
     from REST_REVIEW 
     group by MEMBER_ID
-    order by cc desc
+    order by CNT desc
     limit 1)
 
-select MEMBER_NAME, REVIEW_TEXT, DATE_FORMAT(REVIEW_DATE, "%Y-%m-%d") as REVIEW_DATE
+select p.MEMBER_NAME, r.REVIEW_TEXT, DATE_FORMAT(r.REVIEW_DATE, "%Y-%m-%d") as REVIEW_DATE
     from REST_REVIEW r
-        join MEMBER_PROFILE p
-        on r.MEMBER_ID = p.MEMBER_ID
-        join TBL t
+        join tbl t
         on r.MEMBER_ID = t.MEMBER_ID
-    order by REVIEW_DATE, REVIEW_TEXT
+        join MEMBER_PROFILE p
+        on t.MEMBER_ID = p.MEMBER_ID
+    order by REVIEW_DATE, r.REVIEW_TEXT
