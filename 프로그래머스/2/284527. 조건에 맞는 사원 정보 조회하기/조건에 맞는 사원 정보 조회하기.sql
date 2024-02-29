@@ -1,6 +1,11 @@
-SELECT SUM(B.SCORE) SCORE, A.EMP_NO, A.EMP_NAME, A.POSITION, A.EMAIL
-FROM HR_EMPLOYEES A JOIN HR_GRADE B
-ON A.EMP_NO = B.EMP_NO
-GROUP BY B.EMP_NO
-ORDER BY 1 DESC
-LIMIT 1;
+with tbl as (select EMP_NO, sum(SCORE) as SC
+    from HR_GRADE 
+    group by EMP_NO
+    order by SC desc
+    limit 1)
+    
+select t.SC as SCORE, e.EMP_NO, EMP_NAME, POSITION, EMAIL
+    from HR_EMPLOYEES e
+        join tbl t
+        on e.EMP_NO = t.EMP_NO
+    
