@@ -1,38 +1,35 @@
+# 0421 ~ 0441
 import sys
 sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
 
-n, m = map(int, sys.stdin.readline().split())
+N, M = map(int, input().split())
 
-#처음에 n+1까지 배열 만들기
-arr = [ i for i in range(n+1)]
+parent = [i for i in range(N+1)]
 
-def find(x):
-    if x == arr[x]:
-        return x
-    else:
-        arr[x] = find(arr[x])
-        return arr[x]
+def find(n):
+    if parent[n] == n:
+        return n
+    tmp = find(parent[n])
+    parent[n] = tmp
+    return tmp
 
-def union(a, b):
-    a = find(a)
-    b = find(b)
+def union(a,b):
+    if parent[a] != parent[b]:
+        tmpA = find(a)
+        tmpB = find(b)
+        if tmpA < tmpB:
+            parent[tmpB] = tmpA
+        else:
+            parent[tmpA] = tmpB
 
-    if a != b:
-        arr[a] = b
-
-def checkSame(a, b):
-    a = find(a)
-    b = find(b)
-
-    if a == b:
-        print("yes")
-    else:
-        print("no")
-
-for _ in range(m):
-    c, a, b = map(int, sys.stdin.readline().split())
+for _ in range(M):
+    c, a, b = map(int, input().split())
 
     if c == 0:
-        union(a, b)
+        union(a,b)
     else:
-        checkSame(a, b)
+        if find(a) != find(b):
+            print("NO")
+        else:
+            print("YES")
