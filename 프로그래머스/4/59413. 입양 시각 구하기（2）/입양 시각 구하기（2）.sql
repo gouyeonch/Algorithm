@@ -1,9 +1,12 @@
--- 코드를 입력하세요
-SET @hour = -1;
-SELECT (@hour := @hour + 1) "HOUR",
-    (select count(DATETIME)
-        from ANIMAL_OUTS 
-        where hour(DATETIME) = @hour) "COUNT"
-    from ANIMAL_OUTS
+# -- 코드를 입력하세요
+SET @HOUR = -1;
+select (@HOUR := @HOUR + 1) HOUR, 
+    (select COUNT(HOUR(DATETIME))
+        from ANIMAL_OUTS
+        where (HOUR(DATETIME) = @HOUR)) as COUNT
+    from ANIMAL_OUTS 
     where @HOUR < 23
-    order by @HOUR
+    group by HOUR
+# select *,HOUR(DATETIME) as HOUR, COUNT(*)
+#     from ANIMAL_OUTS
+#     group by HOUR
